@@ -1,0 +1,6 @@
+[submodule "rknn-toolkit2"]
+	path = thirdparty/rknn-toolkit2
+	url = git@github.com:airockchip/rknn-toolkit2.git
+[submodule "rknn-llm"]
+	path = thirdparty/rknn-llm
+	url = git@github.com:airockchip/rknn-llm.git
