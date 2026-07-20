@@ -55,7 +55,20 @@ RUN groupadd --gid ${USER_GID} ${USERNAME} \
 
 COPY ./config/sshd_config /etc/ssh/sshd_config
 
+RUN mkdir /opt/conda && chown 1000:1000 /opt/conda
+
 USER ${USERNAME}
+WORKDIR /home/${USERNAME}
+
+ENV CONDA_DIR=/opt/conda
+ENV PATH=$CONDA_DIR/miniconda3/bin:$PATH
+
+# Download and install Miniconda in silent mode
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh -O miniconda.sh && \
+    /bin/bash miniconda.sh -b -p $CONDA_DIR/miniconda3 && \
+    rm miniconda.sh && \
+    $CONDA_DIR/miniconda3/bin/conda clean -afy
+
 WORKDIR /workspace
 
 CMD ["/bin/bash"]
